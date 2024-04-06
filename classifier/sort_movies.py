@@ -86,10 +86,10 @@ app = typer.Typer()
 
 @app.command()
 def move(movie_path: str, dest_dir: str, dry_run: bool=False):
-    if movie_path.endswith('.mkv'):
+    if movie_path.endswith('.mkv') or movie_path.endswith('.m4v'):
         move_movie(movie_path, dest_dir)
     else:
-        print("Provided filename didn't end in mkv")
+        print("Provided filename didn't end in mkv or m4v")
 
 if __name__ == '__main__':
     app()
