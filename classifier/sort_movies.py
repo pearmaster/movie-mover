@@ -62,6 +62,8 @@ def lookup_movie_violence(movie_name:str) -> dict[str,str|int|bool]:
 
 def move_movie(source: str, target_base_dir: str, prompt:None|bool=None):
     movie_name = os.path.splitext(os.path.basename(source))[0]
+    if 'part0' in movie_name.lower():
+        movie_name = os.path.splitext(os.path.basename(movie_name))[0]
     src_dir = os.path.dirname(source)
     print(source)
     nfo_path = os.path.join(src_dir, f"{movie_name}.nfo")
@@ -88,8 +90,10 @@ app = typer.Typer()
 def move(movie_path: str, dest_dir: str, dry_run: bool=False):
     if os.path.isdir(movie_path):
         for fname in os.listdir(movie_path):
-            filepath = os.path.join(movie_path, os.fsdecode(fname))
-            move_movie(filepatn, dest_dir)
+            if fname.endswith('.mkv') or fname.endswith('.m4v'):
+                filepath = os.path.join(movie_path, os.fsdecode(fname))
+                if os.path.isfile(filepath):
+                    move_movie(filepatn, dest_dir)
     elif os.path.isfile(movie_path):
         if movie_path.endswith('.mkv') or movie_path.endswith('.m4v'):
             move_movie(movie_path, dest_dir, prompt=True)
