@@ -80,6 +80,7 @@ def move_movie(source: str, target_base_dir: str, prompt:None|bool=None):
     if prompt is None:
         prompt = typer.confirm(f"Move file to from {src_dir} to {target_dir}?")
     if prompt:
+        print(f"Moving to {target_dir}")
         os.makedirs(target_dir, exist_ok=True)
         for f in files_to_move:
             shutil.move(os.path.join(src_dir, f), target_dir)
@@ -87,19 +88,25 @@ def move_movie(source: str, target_base_dir: str, prompt:None|bool=None):
 app = typer.Typer()
 
 @app.command()
-def move(movie_path: str, dest_dir: str, dry_run: bool=False):
+def move(movie_path: str, dest_dir: str):
+    print(f"Moving {movie_path} to {dest_dir}")
     if os.path.isdir(movie_path):
+        print("Moving a directory")
         for fname in os.listdir(movie_path):
-            if fname.endswith('.mkv') or fname.endswith('.m4v'):
+            if fname.endswith('.mkv') or fname.endswith('.m4v') or fname.endswith('.webm'):
                 filepath = os.path.join(movie_path, os.fsdecode(fname))
                 if os.path.isfile(filepath):
-                    move_movie(filepatn, dest_dir)
+                    move_movie(filepath, dest_dir, prompt=True)
     elif os.path.isfile(movie_path):
-        if movie_path.endswith('.mkv') or movie_path.endswith('.m4v'):
-            move_movie(movie_path, dest_dir, prompt=True)
+        print("Moving a file")
+        if movie_path.endswith('.mkv') or movie_path.endswith('.m4v') or fname.endswith('.webm'):
+            move_movie(movie_path, dest_dir)
         else:
             print("Provided filename didn't end in mkv or m4v")
+    else:
+        print(f"'{movie_path}' is neither a file nor a directory")
 
 if __name__ == '__main__':
+    print("Running")
     app()
 
