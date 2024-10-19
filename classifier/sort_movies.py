@@ -73,7 +73,7 @@ def move_movie(source: str, target_base_dir: str, prompt:None|bool=None):
     else:
         movie_info = lookup_movie_age(movie_name)
     print(movie_info)
-    target_dir = os.path.join(target_base_dir, movie_info['mpaa_rating'], str(movie_info['age_recommendation'], movie_name))
+    target_dir = os.path.join(target_base_dir, movie_info['mpaa_rating'], str(movie_info['age_recommendation']), movie_name)
     #print(lookup_movie_violence(movie_name))
     files_to_move = [ f for f in os.listdir(src_dir) if f.startswith(movie_name) ]
     print(files_to_move)
