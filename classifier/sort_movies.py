@@ -43,7 +43,7 @@ def lookup_movie_violence(movie_name:str) -> dict[str,str|int|bool]:
     client = OpenAI()
 
     completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": "You are a research assistant, sharing information about movies as provided by the common sense media website.  You return the information in JSON format"},
             {"role": "user", "content": f"How much 'Violence and Scariness' is in the movie named 'Captain America Civil War'?"},
