@@ -77,6 +77,7 @@ def move_movie(source: str, target_base_dir: str, prompt:None|bool=None):
     #print(lookup_movie_violence(movie_name))
     files_to_move = [ f for f in os.listdir(src_dir) if f.startswith(movie_name) ]
     print(files_to_move)
+
     if prompt is None:
         prompt = typer.confirm(f"Move file to from {src_dir} to {target_dir}?")
     if prompt:
