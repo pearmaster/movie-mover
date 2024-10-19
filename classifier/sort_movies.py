@@ -108,6 +108,9 @@ def move(movie_path: str, dest_dir: str):
         print(f"'{movie_path}' is neither a file nor a directory")
 
 if __name__ == '__main__':
+    import sys
     print("Running")
-    app()
-
+    try:
+        app()
+    except Exception:
+        sys.exit(0)
